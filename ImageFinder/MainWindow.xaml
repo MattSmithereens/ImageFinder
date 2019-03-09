@@ -20,7 +20,7 @@
                         <TextBox x:Name="TitleTxt" Padding="10" Margin="0 0 0 20" />
 
                         <TextBlock Margin="0 0 0 10" Text="BODY:" FontSize="22" FontWeight="Bold"/>
-                        <TextBox x:Name="BodyTxt" Padding="10" TextWrapping="Wrap" AcceptsReturn="True" MaxHeight="100" VerticalScrollBarVisibility="Auto"/>
+                        <TextBox x:Name="BodyTxt" Padding="10" TextWrapping="Wrap" AcceptsReturn="True" MaxHeight="100" VerticalScrollBarVisibility="Auto" TextChanged="BodyTxt_TextChanged"/>
                     </StackPanel>
                 </Border>
 
@@ -32,6 +32,15 @@
                     </Grid>
                 </Border>
             </Grid>
+        </Border>
+
+        <Border Padding="10" BorderBrush="Black" BorderThickness="1" Background="WhiteSmoke">
+            <StackPanel>
+                <TextBlock HorizontalAlignment="Center" Text="SELECT WORDS TO INCLUDE IN SEARCH" FontSize="22" FontWeight="Bold" Margin="0 0 0 10"/>
+                <WrapPanel x:Name="SearchTermsArea">
+                    
+                </WrapPanel>
+            </StackPanel>
         </Border>
 
         <Border Padding="10" BorderBrush="Black" BorderThickness="1" Background="DarkGray">

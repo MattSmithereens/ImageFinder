@@ -24,5 +24,39 @@ namespace ImageFinder
         {
             InitializeComponent();
         }
+
+        private void BodyTxt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SearchTermsArea.Children.Clear();
+
+            string[] words = BodyTxt.Text.Split(null);
+
+            foreach(var word in words)
+            {
+                TextBlock txtBlock = new TextBlock();
+                txtBlock.Text = word;
+                txtBlock.Margin = new Thickness { Left = 0, Top = 0, Right = 10, Bottom = 10 };
+                txtBlock.FontSize = 16;
+                txtBlock.Background = new SolidColorBrush(Color.FromRgb(238, 238, 238));
+                txtBlock.TextWrapping = TextWrapping.Wrap;
+                txtBlock.HorizontalAlignment = HorizontalAlignment.Left;
+                txtBlock.MouseLeftButtonDown += OnWordClick;
+                txtBlock.MouseRightButtonDown += OnWordDeselect;
+
+                SearchTermsArea.Children.Add(txtBlock);
+            }
+        }
+
+        private void OnWordClick(object sender, RoutedEventArgs e)
+        {
+            var txtBlock = (TextBlock)sender;
+            txtBlock.FontWeight = FontWeights.Bold;
+        }
+
+        private void OnWordDeselect(object sender, RoutedEventArgs e)
+        {
+            var txtBlock = (TextBlock)sender;
+            txtBlock.FontWeight = FontWeights.Normal;
+        }
     }
 }
