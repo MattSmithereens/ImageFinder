@@ -6,7 +6,33 @@
         xmlns:local="clr-namespace:ImageFinder"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <StackPanel>
+        <Border Padding="10" BorderBrush="Black" BorderThickness="1" Background="SlateBlue">
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Margin="0 0 0 10" Text="TITLE:" FontSize="22" FontWeight="Bold"/>
+                    <TextBox x:Name="TitleTxt" Padding="10" Margin="0 0 0 20" />
+
+                    <TextBlock Margin="0 0 0 10" Text="BODY:" FontSize="22" FontWeight="Bold"/>
+                    <TextBox x:Name="BodyTxt" Padding="50" />
+                </StackPanel>
+
+                <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Background="Azure" Margin="10 0 0 0">
+                    <Image Margin="10"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Border Padding="10" BorderBrush="Black" BorderThickness="1" Background="DarkGray">
+            <StackPanel>
+                <TextBlock HorizontalAlignment="Center" Text="RESULTS" FontSize="22" FontWeight="Bold"/>
+                <ComboBox
+            </StackPanel>
+        </Border>
+    </StackPanel>
 </Window>
