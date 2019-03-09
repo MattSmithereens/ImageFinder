@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="Config\Master.cs" />
     <Compile Include="Domain\HelperMethods.cs" />
+    <Compile Include="Domain\ImageRepository.cs" />
     <Compile Include="Domain\WebImage.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

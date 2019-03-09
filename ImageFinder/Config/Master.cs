@@ -8,7 +8,7 @@ namespace ImageFinder.Config
 {
     public static class Master
     {
-        public static string API_Endpoint = "http://www.splashbase.co/api/v1/images/search";
+        public static string API_Endpoint = "http://www.splashbase.co/api/v1/images/search?query=";
 
     }
 }

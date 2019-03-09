@@ -1,28 +1,65 @@
 ﻿using ImageFinder.Config;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace ImageFinder.Domain
 {
     public static class HelperMethods
     {
-        public static void SearchForImages(string searchTerms)
+        #region SearchImages
+        public static string SearchForImages(string searchTerms)
         {
-            using(var client = new HttpClient())
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Master.API_Endpoint + searchTerms);
+
+            try
             {
-                client.BaseAddress = new Uri(Master.API_Endpoint);
+                WebResponse response = request.GetResponse();
 
-                var response = client.GetAsync(searchTerms);
-                response.Wait();
-
-                var result = response.Result;
-
-                if(result.IsSuccessStatusCode)
+                using(Stream responseStream = response.GetResponseStream())
                 {
-                    var image = result.Content.ReadAsAsync<Student[]>();
-                    
+                    StreamReader reader = new StreamReader(responseStream, System.Text.Encoding.UTF8);
+
+                    return reader.ReadToEnd();
+                }
+            }
+            catch(WebException ex)
+            {
+                WebResponse errorResponse = ex.Response;
+
+                using(Stream responseStream = errorResponse.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, System.Text.Encoding.GetEncoding("utf-8"));
+                    String errorText = reader.ReadToEnd();
+
+                    //TODO: create error log
+
+                    return "Failed";
                 }
             }
         }
+        #endregion
+
+        #region ParseSearchTerms
+        public static string ParsedSearchTerms(List<string> searchTerms)
+        {
+            string searchString = string.Empty;
+
+            foreach(var word in searchTerms)
+            {
+                if (!searchString.Contains(word))
+                    searchString += word;
+
+                if (word != searchTerms[searchTerms.Count - 1])
+                    searchString += ", ";
+            }
+
+            return searchString;
+        }
+        #endregion
     }
 }
