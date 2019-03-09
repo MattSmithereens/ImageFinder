@@ -20,13 +20,16 @@
                         <TextBox x:Name="TitleTxt" Padding="10" Margin="0 0 0 20" />
 
                         <TextBlock Margin="0 0 0 10" Text="BODY:" FontSize="22" FontWeight="Bold"/>
-                        <TextBox x:Name="BodyTxt" Padding="50" MaxLines="100" />
+                        <TextBox x:Name="BodyTxt" Padding="10" TextWrapping="Wrap" AcceptsReturn="True" MaxHeight="100" VerticalScrollBarVisibility="Auto"/>
                     </StackPanel>
                 </Border>
-                
+
 
                 <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Background="Azure" Margin="10 0 0 0">
-                    <Image Margin="10"/>
+                    <Grid>
+                        <Image Margin="10" />
+                        <TextBlock Text="... ENTER YOUR TEXT AND THEN SELECT AN IMAGE FROM THE RESULTS BELOW ..." FontSize="30" FontWeight="Bold" FontFamily="Helvetica" Foreground="DarkGray" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
                 </Border>
             </Grid>
         </Border>
