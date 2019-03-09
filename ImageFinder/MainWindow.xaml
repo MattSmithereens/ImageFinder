@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageFinder"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" SizeToContent="Height"  Width="800">
     <StackPanel>
         <Border Padding="10" BorderBrush="Black" BorderThickness="1" Background="SlateBlue">
             <Grid Margin="10">
@@ -14,13 +14,16 @@
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0">
-                    <TextBlock Margin="0 0 0 10" Text="TITLE:" FontSize="22" FontWeight="Bold"/>
-                    <TextBox x:Name="TitleTxt" Padding="10" Margin="0 0 0 20" />
+                <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Padding="10">
+                    <StackPanel>
+                        <TextBlock Margin="0 0 0 10" Text="TITLE:" FontSize="22" FontWeight="Bold"/>
+                        <TextBox x:Name="TitleTxt" Padding="10" Margin="0 0 0 20" />
 
-                    <TextBlock Margin="0 0 0 10" Text="BODY:" FontSize="22" FontWeight="Bold"/>
-                    <TextBox x:Name="BodyTxt" Padding="50" />
-                </StackPanel>
+                        <TextBlock Margin="0 0 0 10" Text="BODY:" FontSize="22" FontWeight="Bold"/>
+                        <TextBox x:Name="BodyTxt" Padding="50" MaxLines="100" />
+                    </StackPanel>
+                </Border>
+                
 
                 <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Background="Azure" Margin="10 0 0 0">
                     <Image Margin="10"/>
@@ -30,8 +33,8 @@
 
         <Border Padding="10" BorderBrush="Black" BorderThickness="1" Background="DarkGray">
             <StackPanel>
-                <TextBlock HorizontalAlignment="Center" Text="RESULTS" FontSize="22" FontWeight="Bold"/>
-                <ComboBox
+                <TextBlock HorizontalAlignment="Center" Text="RESULTS" FontSize="22" FontWeight="Bold" Margin="0 0 0 10"/>
+                <ComboBox Padding="10" Margin="50 0 50 0"/>
             </StackPanel>
         </Border>
     </StackPanel>
