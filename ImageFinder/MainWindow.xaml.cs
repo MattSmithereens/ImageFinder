@@ -85,6 +85,14 @@ namespace ImageFinder
         {
             var parsedSearchTerms = HelperMethods.ParsedSearchTerms(ImageRepository.EnabledSearchTerms);
             var jsonString = HelperMethods.SearchForImages(parsedSearchTerms);
+            var images = HelperMethods.GetImagesFromJson(jsonString);
+
+            ImageCombobox.Items.Clear();
+
+            foreach(var image in images)
+            {
+                ImageCombobox.Items.Add(image);
+            }
         }
     }
 }

@@ -1,11 +1,14 @@
 ﻿using ImageFinder.Config;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 
 namespace ImageFinder.Domain
 {
@@ -61,5 +64,16 @@ namespace ImageFinder.Domain
             return searchString;
         }
         #endregion
+
+        public static IEnumerable<WebImage> GetImagesFromJson(string json)
+        {
+            var jsonArray = json.Substring(json.IndexOf("["));
+            jsonArray = jsonArray.Substring(0, jsonArray.Length - 1);
+
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            WebImage[] images = serializer.Deserialize<WebImage[]>(jsonArray);
+
+            return images.Take(20);
+        }
     }
 }
