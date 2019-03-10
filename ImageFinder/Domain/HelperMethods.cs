@@ -100,9 +100,10 @@ namespace ImageFinder.Domain
             slide = slides.AddSlide(1, custLayout);
 
             objText = slide.Shapes[1].TextFrame.TextRange;
-            objText.Text = title;
+            objText.Text = title + "\r\n\r\n" + body;
             objText.Font.Name = "Arial";
             objText.Font.Size = 40;
+            objText.ParagraphFormat.Alignment = PpParagraphAlignment.ppAlignCenter;
 
             Microsoft.Office.Interop.PowerPoint.Shape shape = slide.Shapes[2];
 
@@ -115,11 +116,6 @@ namespace ImageFinder.Domain
             FileInfo file = new FileInfo(fileName);
 
             slide.Shapes.AddPicture(file.FullName, MsoTriState.msoFalse, MsoTriState.msoTrue, shape.Left, shape.Top, shape.Width, shape.Height);
-
-            objTextBody = slide.Shapes[1].TextFrame.TextRange;
-            objTextBody.Text = body;
-            objTextBody.Font.Name = "Arial";
-            objTextBody.Font.Size = 32;
 
             pptPresentation.SaveAs(@"ImageFinderSlide.pptx", Microsoft.Office.Interop.PowerPoint.PpSaveAsFileType.ppSaveAsDefault, MsoTriState.msoTrue);
         }
