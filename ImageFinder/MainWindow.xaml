@@ -27,8 +27,8 @@
 
                 <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Background="Azure" Margin="10 0 0 0">
                     <Grid>
-                        <Image Margin="10" />
-                        <TextBlock Text="... ENTER YOUR TEXT AND THEN SELECT AN IMAGE FROM THE RESULTS BELOW ..." FontSize="30" FontWeight="Bold" FontFamily="Helvetica" Foreground="DarkGray" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image x:Name="DisplayImg" Margin="10" MaxWidth="300" MaxHeight="450" />
+                        <TextBlock x:Name="InstructionTxt" Text="... ENTER YOUR TEXT AND THEN SELECT AN IMAGE FROM THE RESULTS BELOW ..." FontSize="30" FontWeight="Bold" FontFamily="Helvetica" Foreground="DarkGray" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
             </Grid>
@@ -46,7 +46,7 @@
         <Border Padding="10" BorderBrush="Black" BorderThickness="1" Background="DarkGray">
             <StackPanel>
                 <TextBlock HorizontalAlignment="Center" Text="RESULTS" FontSize="22" FontWeight="Bold" Margin="0 0 0 10"/>
-                <ComboBox x:Name="ImageCombobox" Padding="10" Margin="50 0 50 0"/>
+                <ComboBox x:Name="ImageCombobox" Padding="10" Margin="50 0 50 0" SelectionChanged="ImageCombobox_Selected" GotFocus="ImageCombobox_GotFocus" />
             </StackPanel>
         </Border>
     </StackPanel>

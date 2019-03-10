@@ -55,8 +55,6 @@ namespace ImageFinder
 
             if(!ImageRepository.EnabledSearchTerms.Contains(txtBlock.Text))
                 ImageRepository.EnabledSearchTerms.Add(txtBlock.Text);
-
-            LoadImageResults();
         }
 
         private void OnWordDeselect(object sender, RoutedEventArgs e)
@@ -64,8 +62,6 @@ namespace ImageFinder
             var txtBlock = (TextBlock)sender;
             txtBlock.FontWeight = FontWeights.Normal;
             ImageRepository.EnabledSearchTerms.Remove(txtBlock.Text);
-
-            LoadImageResults();
         }
 
         private void TitleTxt_TextChanged(object sender, TextChangedEventArgs e)
@@ -77,8 +73,6 @@ namespace ImageFinder
                 if (!ImageRepository.EnabledSearchTerms.Contains(word.Trim()))
                     ImageRepository.EnabledSearchTerms.Add(word.Trim());
             }
-
-            LoadImageResults();
         }
 
         private void LoadImageResults()
@@ -93,6 +87,33 @@ namespace ImageFinder
             {
                 ImageCombobox.Items.Add(image);
             }
+        }
+
+        private void ImageCombobox_Selected(object sender, RoutedEventArgs e)
+        {
+            if (ImageCombobox.SelectedItem is null)
+            {
+                InstructionTxt.Visibility = Visibility.Visible;
+                DisplayImg.Source = null;
+                return;
+            }
+                
+
+            InstructionTxt.Visibility = Visibility.Hidden;
+
+            var image = ImageCombobox.SelectedItem as WebImage;
+
+            BitmapImage bmp = new BitmapImage();
+            bmp.BeginInit();
+            bmp.UriSource = new Uri(image.URL, UriKind.Absolute);
+            bmp.EndInit();
+
+            DisplayImg.Source = bmp;
+        }
+
+        private void ImageCombobox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            LoadImageResults();
         }
     }
 }
