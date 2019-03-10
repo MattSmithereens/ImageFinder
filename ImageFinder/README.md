@@ -18,5 +18,7 @@ When you add text to the body input field, the text will appear with a purple ba
 
 Any text added to the title input will be included in the image search.
 
+All results will appear in a dropdown in the "Results" section. Selecting an item from the dropdown will make the image appear.
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

@@ -52,6 +52,9 @@ namespace ImageFinder
             var txtBlock = (TextBlock)sender;
             txtBlock.FontWeight = FontWeights.Bold;
 
+            txtBlock.Focusable = true;
+            txtBlock.Focus();
+
             if(!ImageRepository.EnabledBodySearchTerms.Contains(txtBlock.Text) && !ImageRepository.TitleSearchTerms.Contains(txtBlock.Text))
                 ImageRepository.EnabledBodySearchTerms.Add(txtBlock.Text);
 
@@ -63,6 +66,8 @@ namespace ImageFinder
             var txtBlock = (TextBlock)sender;
             txtBlock.FontWeight = FontWeights.Normal;
             ImageRepository.EnabledBodySearchTerms.Remove(txtBlock.Text);
+
+            txtBlock.Focus();
 
             LoadImageResults();
         }
