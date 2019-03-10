@@ -20,5 +20,9 @@ Any text added to the title input will be included in the image search.
 
 All results will appear in a dropdown in the "Results" section. Selecting an item from the dropdown will make the image appear.
 
+## Exporting To PowerPoint
+
+After filling out the Title and Body fields and selecting an image, click the "Export Slide" button. This will open PowerPoint with the newly created slide. The slide will be saved in the project bin directory in the same folder as the executable.
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
