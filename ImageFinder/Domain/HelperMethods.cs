@@ -9,6 +9,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using System.Windows.Media.Imaging;
+using Microsoft.Office.Interop.PowerPoint;
+using Microsoft.Office.Core;
+using System.Drawing;
+using System.Windows.Media;
 
 namespace ImageFinder.Domain
 {
@@ -17,7 +22,7 @@ namespace ImageFinder.Domain
         #region SearchImages
         public static string SearchForImages(string searchTerms)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Master.API_Endpoint + searchTerms);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ImageFinder.Config.Master.API_Endpoint + searchTerms);
 
             try
             {
@@ -74,6 +79,49 @@ namespace ImageFinder.Domain
             WebImage[] images = serializer.Deserialize<WebImage[]>(jsonArray);
 
             return images.Reverse();
+        }
+
+        public static void ExportSlide(string title, string body, BitmapImage img)
+        {
+            Application pptApplication = new Application();
+            string fileName = @"imageFinderResult";
+
+            fileName += img.UriSource.AbsoluteUri.Substring(img.UriSource.AbsoluteUri.LastIndexOf("."));
+
+            Presentation pptPresentation = pptApplication.Presentations.Add(MsoTriState.msoTrue);
+
+            Microsoft.Office.Interop.PowerPoint.Slides slides;
+            Microsoft.Office.Interop.PowerPoint._Slide slide;
+            Microsoft.Office.Interop.PowerPoint.TextRange objText;
+            Microsoft.Office.Interop.PowerPoint.TextRange objTextBody;
+            Microsoft.Office.Interop.PowerPoint.CustomLayout custLayout = pptPresentation.SlideMaster.CustomLayouts[Microsoft.Office.Interop.PowerPoint.PpSlideLayout.ppLayoutText];
+
+            slides = pptPresentation.Slides;
+            slide = slides.AddSlide(1, custLayout);
+
+            objText = slide.Shapes[1].TextFrame.TextRange;
+            objText.Text = title;
+            objText.Font.Name = "Arial";
+            objText.Font.Size = 40;
+
+            Microsoft.Office.Interop.PowerPoint.Shape shape = slide.Shapes[2];
+
+            byte[] data;
+            using (WebClient client = new WebClient())
+            {
+                data = client.DownloadData(img.UriSource.AbsoluteUri);
+            }
+            File.WriteAllBytes(fileName, data);
+            FileInfo file = new FileInfo(fileName);
+
+            slide.Shapes.AddPicture(file.FullName, MsoTriState.msoFalse, MsoTriState.msoTrue, shape.Left, shape.Top, shape.Width, shape.Height);
+
+            objTextBody = slide.Shapes[1].TextFrame.TextRange;
+            objTextBody.Text = body;
+            objTextBody.Font.Name = "Arial";
+            objTextBody.Font.Size = 32;
+
+            pptPresentation.SaveAs(@"ImageFinderSlide.pptx", Microsoft.Office.Interop.PowerPoint.PpSaveAsFileType.ppSaveAsDefault, MsoTriState.msoTrue);
         }
     }
 }

@@ -129,5 +129,16 @@ namespace ImageFinder
             ImageRepository.EnabledBodySearchTerms.Clear();
             LoadImageResults();
         }
+
+        private void ExportButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(string.IsNullOrEmpty(TitleTxt.Text) || string.IsNullOrEmpty(BodyTxt.Text) || DisplayImg.Source is null)
+            {
+                MessageBox.Show("Must enter a title, body, and select an image!", "Error", MessageBoxButton.OK);
+                return;
+            }
+
+            HelperMethods.ExportSlide(TitleTxt.Text, BodyTxt.Text, (BitmapImage)DisplayImg.Source);
+        }
     }
 }

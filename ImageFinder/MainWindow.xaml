@@ -50,5 +50,9 @@
                 <ComboBox x:Name="ImageCombobox" Padding="10" Margin="50 0 50 0" SelectionChanged="ImageCombobox_Selected" />
             </StackPanel>
         </Border>
+
+        <Border Padding="10 30 10 30" BorderBrush="Black" BorderThickness="1" Background="AliceBlue">
+            <Button x:Name="ExportButton" Content="Export Slide" Padding="10" Margin="100 0 100 0" Click="ExportButton_Click"/>
+        </Border>
     </StackPanel>
 </Window>
