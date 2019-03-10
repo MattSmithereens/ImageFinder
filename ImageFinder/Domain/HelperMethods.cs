@@ -73,10 +73,7 @@ namespace ImageFinder.Domain
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             WebImage[] images = serializer.Deserialize<WebImage[]>(jsonArray);
 
-            if (images.Length > 20)
-                return images.Take(20);
-
-            return images;
+            return images.Reverse();
         }
     }
 }

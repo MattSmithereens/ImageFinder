@@ -38,9 +38,8 @@ namespace ImageFinder
                 txtBlock.Text = word;
                 txtBlock.Margin = new Thickness { Left = 0, Top = 0, Right = 10, Bottom = 10 };
                 txtBlock.FontSize = 16;
-                txtBlock.Background = new SolidColorBrush(Color.FromRgb(238, 238, 238));
-                txtBlock.TextWrapping = TextWrapping.Wrap;
-                txtBlock.HorizontalAlignment = HorizontalAlignment.Left;
+                txtBlock.Background = new SolidColorBrush(Color.FromRgb(143, 21, 214));
+                txtBlock.Foreground = new SolidColorBrush(Color.FromRgb(245, 245, 245));
                 txtBlock.MouseLeftButtonDown += OnWordClick;
                 txtBlock.MouseRightButtonDown += OnWordDeselect;
 
@@ -66,11 +65,6 @@ namespace ImageFinder
             ImageRepository.EnabledBodySearchTerms.Remove(txtBlock.Text);
 
             LoadImageResults();
-        }
-
-        private void TitleTxt_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            
         }
 
         private void LoadImageResults()
@@ -123,6 +117,12 @@ namespace ImageFinder
 
                 LoadImageResults();
             }
+        }
+
+        private void BodyTxt_LostFocus(object sender, RoutedEventArgs e)
+        {
+            ImageRepository.EnabledBodySearchTerms.Clear();
+            LoadImageResults();
         }
     }
 }

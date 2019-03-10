@@ -21,7 +21,7 @@
                         <TextBox x:Name="TitleTxt" Padding="10" Margin="0 0 0 20" LostFocus="TitleTxt_LostFocus" />
 
                         <TextBlock Margin="0 0 0 10" Text="BODY:" FontSize="22" FontWeight="Bold"/>
-                        <TextBox x:Name="BodyTxt" Padding="10" TextWrapping="Wrap" AcceptsReturn="True" MaxHeight="100" VerticalScrollBarVisibility="Auto" TextChanged="BodyTxt_TextChanged"/>
+                        <TextBox x:Name="BodyTxt" Padding="10" TextWrapping="Wrap" AcceptsReturn="True" MaxHeight="100" VerticalScrollBarVisibility="Auto" TextChanged="BodyTxt_TextChanged" LostFocus="BodyTxt_LostFocus"/>
                     </StackPanel>
                 </Border>
 
