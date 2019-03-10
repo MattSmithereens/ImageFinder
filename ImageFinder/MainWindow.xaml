@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageFinder"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Title="MainWindow" SizeToContent="Height"  Width="800">
     <StackPanel>
         <Border Padding="10" BorderBrush="Black" BorderThickness="1" Background="SlateBlue">
@@ -17,7 +18,7 @@
                 <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Padding="10">
                     <StackPanel>
                         <TextBlock Margin="0 0 0 10" Text="TITLE:" FontSize="22" FontWeight="Bold"/>
-                        <TextBox x:Name="TitleTxt" Padding="10" Margin="0 0 0 20" TextChanged="TitleTxt_TextChanged" />
+                        <TextBox x:Name="TitleTxt" Padding="10" Margin="0 0 0 20" LostFocus="TitleTxt_LostFocus" />
 
                         <TextBlock Margin="0 0 0 10" Text="BODY:" FontSize="22" FontWeight="Bold"/>
                         <TextBox x:Name="BodyTxt" Padding="10" TextWrapping="Wrap" AcceptsReturn="True" MaxHeight="100" VerticalScrollBarVisibility="Auto" TextChanged="BodyTxt_TextChanged"/>
@@ -46,7 +47,7 @@
         <Border Padding="10" BorderBrush="Black" BorderThickness="1" Background="DarkGray">
             <StackPanel>
                 <TextBlock HorizontalAlignment="Center" Text="RESULTS" FontSize="22" FontWeight="Bold" Margin="0 0 0 10"/>
-                <ComboBox x:Name="ImageCombobox" Padding="10" Margin="50 0 50 0" SelectionChanged="ImageCombobox_Selected" GotFocus="ImageCombobox_GotFocus" />
+                <ComboBox x:Name="ImageCombobox" Padding="10" Margin="50 0 50 0" SelectionChanged="ImageCombobox_Selected" />
             </StackPanel>
         </Border>
     </StackPanel>

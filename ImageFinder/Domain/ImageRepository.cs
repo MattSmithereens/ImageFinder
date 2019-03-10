@@ -8,6 +8,7 @@ namespace ImageFinder.Domain
 {
     public class ImageRepository
     {
-        public static List<string> EnabledSearchTerms = new List<string>() { };
+        public static List<string> TitleSearchTerms = new List<string>() { };
+        public static List<string> EnabledBodySearchTerms = new List<string>() { };
     }
 }

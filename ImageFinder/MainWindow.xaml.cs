@@ -53,31 +53,30 @@ namespace ImageFinder
             var txtBlock = (TextBlock)sender;
             txtBlock.FontWeight = FontWeights.Bold;
 
-            if(!ImageRepository.EnabledSearchTerms.Contains(txtBlock.Text))
-                ImageRepository.EnabledSearchTerms.Add(txtBlock.Text);
+            if(!ImageRepository.EnabledBodySearchTerms.Contains(txtBlock.Text) && !ImageRepository.TitleSearchTerms.Contains(txtBlock.Text))
+                ImageRepository.EnabledBodySearchTerms.Add(txtBlock.Text);
+
+            LoadImageResults();
         }
 
         private void OnWordDeselect(object sender, RoutedEventArgs e)
         {
             var txtBlock = (TextBlock)sender;
             txtBlock.FontWeight = FontWeights.Normal;
-            ImageRepository.EnabledSearchTerms.Remove(txtBlock.Text);
+            ImageRepository.EnabledBodySearchTerms.Remove(txtBlock.Text);
+
+            LoadImageResults();
         }
 
         private void TitleTxt_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string[] words = TitleTxt.Text.Split(null);
-
-            foreach(var word in words)
-            {
-                if (!ImageRepository.EnabledSearchTerms.Contains(word.Trim()))
-                    ImageRepository.EnabledSearchTerms.Add(word.Trim());
-            }
+            
         }
 
         private void LoadImageResults()
         {
-            var parsedSearchTerms = HelperMethods.ParsedSearchTerms(ImageRepository.EnabledSearchTerms);
+            var combined = ImageRepository.TitleSearchTerms.Concat(ImageRepository.EnabledBodySearchTerms);
+            var parsedSearchTerms = HelperMethods.ParsedSearchTerms(combined.ToList());
             var jsonString = HelperMethods.SearchForImages(parsedSearchTerms);
             var images = HelperMethods.GetImagesFromJson(jsonString);
 
@@ -111,9 +110,19 @@ namespace ImageFinder
             DisplayImg.Source = bmp;
         }
 
-        private void ImageCombobox_GotFocus(object sender, RoutedEventArgs e)
+        private void TitleTxt_LostFocus(object sender, RoutedEventArgs e)
         {
-            LoadImageResults();
+            string[] words = TitleTxt.Text.Split(null);
+
+            ImageRepository.TitleSearchTerms.Clear();
+
+            foreach (var word in words)
+            {
+                if (!ImageRepository.TitleSearchTerms.Contains(word.Trim()) && !ImageRepository.EnabledBodySearchTerms.Contains(word.Trim()))
+                    ImageRepository.TitleSearchTerms.Add(word.Trim());
+
+                LoadImageResults();
+            }
         }
     }
 }
