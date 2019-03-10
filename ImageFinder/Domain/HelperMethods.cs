@@ -116,6 +116,8 @@ namespace ImageFinder.Domain
             FileInfo file = new FileInfo(fileName);
 
             slide.Shapes.AddPicture(file.FullName, MsoTriState.msoFalse, MsoTriState.msoTrue, shape.Left, shape.Top, shape.Width, shape.Height);
+            slide.Shapes[1].ZOrder(MsoZOrderCmd.msoBringToFront);
+            slide.Shapes[2].ZOrder(MsoZOrderCmd.msoSendBehindText);
 
             pptPresentation.SaveAs(@"ImageFinderSlide.pptx", Microsoft.Office.Interop.PowerPoint.PpSaveAsFileType.ppSaveAsDefault, MsoTriState.msoTrue);
         }
