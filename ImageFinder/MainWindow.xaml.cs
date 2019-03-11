@@ -84,6 +84,7 @@ namespace ImageFinder
             foreach(var image in images)
             {
                 ImageCombobox.Items.Add(image);
+                ImageCombobox.DisplayMemberPath = "Tags";
             }
         }
 
@@ -103,7 +104,7 @@ namespace ImageFinder
 
             BitmapImage bmp = new BitmapImage();
             bmp.BeginInit();
-            bmp.UriSource = new Uri(image.PreviewURL, UriKind.Absolute);
+            bmp.UriSource = new Uri(image.WebFormatURL, UriKind.Absolute);
             bmp.EndInit();
 
             DisplayImg.Source = bmp;

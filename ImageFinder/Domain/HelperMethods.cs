@@ -22,7 +22,7 @@ namespace ImageFinder.Domain
         #region SearchImages
         public static string SearchForImages(string searchTerms)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ImageFinder.Config.Master.API_Endpoint + searchTerms + "&image_type=photo");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ImageFinder.Config.Master.API_Endpoint + searchTerms + "&image_type=photo&per_page=50");
 
             request.ServerCertificateValidationCallback = delegate { return true; };
 
@@ -75,7 +75,7 @@ namespace ImageFinder.Domain
         public static IEnumerable<WebImage> GetImagesFromJson(string json)
         {
             var jsonArray = json.Substring(json.IndexOf("["));
-            jsonArray = jsonArray.Substring(0, jsonArray.LastIndexOf("}"));
+            jsonArray = jsonArray.Substring(0, jsonArray.LastIndexOf("]") + 1);
 
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             WebImage[] images = serializer.Deserialize<WebImage[]>(jsonArray);
