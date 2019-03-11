@@ -103,7 +103,7 @@ namespace ImageFinder
 
             BitmapImage bmp = new BitmapImage();
             bmp.BeginInit();
-            bmp.UriSource = new Uri(image.URL, UriKind.Absolute);
+            bmp.UriSource = new Uri(image.PreviewURL, UriKind.Absolute);
             bmp.EndInit();
 
             DisplayImg.Source = bmp;
@@ -117,11 +117,11 @@ namespace ImageFinder
 
             foreach (var word in words)
             {
-                if (!ImageRepository.TitleSearchTerms.Contains(word.Trim()) && !ImageRepository.EnabledBodySearchTerms.Contains(word.Trim()))
-                    ImageRepository.TitleSearchTerms.Add(word.Trim());
-
-                LoadImageResults();
+                if (!ImageRepository.TitleSearchTerms.Contains(word) && !ImageRepository.EnabledBodySearchTerms.Contains(word))
+                    ImageRepository.TitleSearchTerms.Add(word);
             }
+
+            LoadImageResults();
         }
 
         private void BodyTxt_LostFocus(object sender, RoutedEventArgs e)

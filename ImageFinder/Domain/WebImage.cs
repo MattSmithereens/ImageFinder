@@ -9,8 +9,8 @@ namespace ImageFinder.Domain
     public class WebImage
     {
         public int Id { get; set; }
-        public string URL { get; set; }
-        public string Large_URL { get; set; }
-        public string Source_Id { get; set; }
+        public string ImageURL { get; set; }
+        public string Tags { get; set; }
+        public string PreviewURL { get; set; }
     }
 }

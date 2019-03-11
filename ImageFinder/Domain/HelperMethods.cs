@@ -22,7 +22,9 @@ namespace ImageFinder.Domain
         #region SearchImages
         public static string SearchForImages(string searchTerms)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ImageFinder.Config.Master.API_Endpoint + searchTerms);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ImageFinder.Config.Master.API_Endpoint + searchTerms + "&image_type=photo");
+
+            request.ServerCertificateValidationCallback = delegate { return true; };
 
             try
             {
@@ -63,7 +65,7 @@ namespace ImageFinder.Domain
                     searchString += word;
 
                 if (word != searchTerms[searchTerms.Count - 1])
-                    searchString += ", ";
+                    searchString += "+";
             }
 
             return searchString;
@@ -73,12 +75,12 @@ namespace ImageFinder.Domain
         public static IEnumerable<WebImage> GetImagesFromJson(string json)
         {
             var jsonArray = json.Substring(json.IndexOf("["));
-            jsonArray = jsonArray.Substring(0, jsonArray.Length - 1);
+            jsonArray = jsonArray.Substring(0, jsonArray.LastIndexOf("}"));
 
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             WebImage[] images = serializer.Deserialize<WebImage[]>(jsonArray);
 
-            return images.Reverse();
+            return images;
         }
 
         public static void ExportSlide(string title, string body, BitmapImage img)
@@ -93,7 +95,6 @@ namespace ImageFinder.Domain
             Microsoft.Office.Interop.PowerPoint.Slides slides;
             Microsoft.Office.Interop.PowerPoint._Slide slide;
             Microsoft.Office.Interop.PowerPoint.TextRange objText;
-            Microsoft.Office.Interop.PowerPoint.TextRange objTextBody;
             Microsoft.Office.Interop.PowerPoint.CustomLayout custLayout = pptPresentation.SlideMaster.CustomLayouts[Microsoft.Office.Interop.PowerPoint.PpSlideLayout.ppLayoutText];
 
             slides = pptPresentation.Slides;

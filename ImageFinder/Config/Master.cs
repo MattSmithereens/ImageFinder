@@ -8,7 +8,7 @@ namespace ImageFinder.Config
 {
     public static class Master
     {
-        public static string API_Endpoint = "http://www.splashbase.co/api/v1/images/search?query=";
-
+        public static string API_Key = "11850543-4877aaaf386547a1f60bf8736";
+        public static string API_Endpoint = $"https://pixabay.com/api/?key={API_Key}&q=";
     }
 }
