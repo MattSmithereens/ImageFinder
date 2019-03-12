@@ -9,6 +9,10 @@ ImageFinder is a utility for helping a user locate images on the web for use in 
 2. Open the project in Visual Studio and Rebuild.
 3. Press Ctrl + F5 to run the program.
 
+## DEPENDENCIES
+The program relies on Gembox.Presentation for the export to PowerPoint functionality. To install this dependency, please follow the instructions below:
+1. Run the following in the NuGet Package Manager Console: ```Install-Package GemBox.Presentation```
+
 
 ## Usage
 
