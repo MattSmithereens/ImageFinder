@@ -30,18 +30,52 @@
                     <Grid>
                         <Image x:Name="DisplayImg" Margin="10" MaxWidth="300" MaxHeight="450" />
                         <TextBlock x:Name="InstructionTxt" Text="... ENTER YOUR TEXT AND THEN SELECT AN IMAGE FROM THE RESULTS BELOW ..." FontSize="30" FontWeight="Bold" FontFamily="Helvetica" Foreground="DarkGray" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Button x:Name="AddImgButton" Content="ADD IMAGE" Height="20" Width="100" VerticalAlignment="Bottom" Background="SlateBlue" Foreground="Black" Opacity="0.50" FontWeight="Black" Click="AddImgButton_Click"/>
                     </Grid>
                 </Border>
             </Grid>
         </Border>
 
-        <Border Padding="10" BorderBrush="Black" BorderThickness="1" Background="WhiteSmoke">
+        <Border Padding="10" BorderBrush="Black" BorderThickness="2" Background="WhiteSmoke">
             <StackPanel>
-                <TextBlock HorizontalAlignment="Center" Text="SELECT WORDS TO INCLUDE IN SEARCH" FontSize="22" FontWeight="Bold" Margin="0 0 0 10"/>
                 <WrapPanel x:Name="SearchTermsArea">
                     
                 </WrapPanel>
             </StackPanel>
+        </Border>
+
+        <Border Padding="10" BorderBrush="Black" BorderThickness="1" Background="WhiteSmoke">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Background="Azure" Margin="5" BorderBrush="Black" BorderThickness="3" Grid.Column="0">
+                    <Grid>
+                        <TextBlock x:Name="Img1TextBlock" Text="1" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Foreground="DarkGray" />
+                        <Image x:Name="SelectedImg1" Width="Auto" Height="150"/>
+                        <Button x:Name="Img1RemoveButton" Content="REMOVE" Height="20" VerticalAlignment="Bottom" Background="SlateBlue" Foreground="Black" Opacity="0.75"/>
+                    </Grid>
+                </Border>
+
+                <Border Background="Azure" Margin="5" BorderBrush="Black" BorderThickness="3" Grid.Column="1">
+                    <Grid>
+                        <TextBlock x:Name="Img2TextBlock" Text="2" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Foreground="DarkGray" />
+                        <Image x:Name="SelectedImg2" Width="Auto" Height="150"/>
+                        <Button x:Name="Img2RemoveButton" Content="REMOVE" Height="20" VerticalAlignment="Bottom" Background="SlateBlue" Foreground="Black" Opacity="0.75"/>
+                    </Grid>
+                </Border>
+
+                <Border Background="Azure" Margin="5" BorderBrush="Black" BorderThickness="3" Grid.Column="2">
+                    <Grid>
+                        <TextBlock x:Name="Img3TextBlock" Text="3" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Foreground="DarkGray" />
+                        <Image x:Name="SelectedImg3" Width="Auto" Height="150"/>
+                        <Button x:Name="Img3RemoveButton" Content="REMOVE" Height="20" VerticalAlignment="Bottom" Background="SlateBlue" Foreground="Black" Opacity="0.75"/>
+                    </Grid>
+                </Border>
+            </Grid>
         </Border>
 
         <Border Padding="10" BorderBrush="Black" BorderThickness="1" Background="DarkGray">

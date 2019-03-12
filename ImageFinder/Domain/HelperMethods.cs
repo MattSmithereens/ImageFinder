@@ -14,6 +14,8 @@ using Microsoft.Office.Interop.PowerPoint;
 using Microsoft.Office.Core;
 using System.Drawing;
 using System.Windows.Media;
+using GemBox.Presentation;
+using System.Diagnostics;
 
 namespace ImageFinder.Domain
 {
@@ -83,44 +85,75 @@ namespace ImageFinder.Domain
             return images;
         }
 
-        public static void ExportSlide(string title, string body, BitmapImage img)
+        public static void ExportSlide(string title, string body, BitmapImage[] imgs)
         {
-            Application pptApplication = new Application();
-            string fileName = @"imageFinderResult";
+            ComponentInfo.SetLicense("FREE-LIMITED-KEY");
+            string[] fileNames = GetFileNames(imgs);
+            FileInfo[] files = DownloadFiles(imgs, fileNames);
 
-            fileName += img.UriSource.AbsoluteUri.Substring(img.UriSource.AbsoluteUri.LastIndexOf("."));
+            var presentation = new PresentationDocument();
 
-            Presentation pptPresentation = pptApplication.Presentations.Add(MsoTriState.msoTrue);
+            var slide = presentation.Slides.AddNew(SlideLayoutType.Custom);
 
-            Microsoft.Office.Interop.PowerPoint.Slides slides;
-            Microsoft.Office.Interop.PowerPoint._Slide slide;
-            Microsoft.Office.Interop.PowerPoint.TextRange objText;
-            Microsoft.Office.Interop.PowerPoint.CustomLayout custLayout = pptPresentation.SlideMaster.CustomLayouts[Microsoft.Office.Interop.PowerPoint.PpSlideLayout.ppLayoutText];
+            var titleTxtBox = slide.Content.AddTextBox(15, 2, 5, 4, LengthUnit.Centimeter);
+            titleTxtBox.Format.Centered = true;
 
-            slides = pptPresentation.Slides;
-            slide = slides.AddSlide(1, custLayout);
+            var bodyTxtBox = slide.Content.AddTextBox(15, 4, 5, 4, LengthUnit.Centimeter);
+            bodyTxtBox.Format.Centered = true;
 
-            objText = slide.Shapes[1].TextFrame.TextRange;
-            objText.Text = title + "\r\n\r\n" + body;
-            objText.Font.Name = "Arial";
-            objText.Font.Size = 40;
-            objText.ParagraphFormat.Alignment = PpParagraphAlignment.ppAlignCenter;
+            var paragraph = titleTxtBox.AddParagraph();
+            var paragraph2 = bodyTxtBox.AddParagraph();
 
-            Microsoft.Office.Interop.PowerPoint.Shape shape = slide.Shapes[2];
+            paragraph.AddRun(title);
+            paragraph.Format.Character.Size = 40;
 
-            byte[] data;
-            using (WebClient client = new WebClient())
+            paragraph2.AddRun(body);
+            paragraph2.Format.Character.Size = 32;
+
+            for(int i = 0; i < imgs.Length; i++)
             {
-                data = client.DownloadData(img.UriSource.AbsoluteUri);
+                var picture = slide.Content.AddPicture(files[i].FullName, 2 * (i * 5) + 5, 12, 6, 5, LengthUnit.Centimeter);
             }
-            File.WriteAllBytes(fileName, data);
-            FileInfo file = new FileInfo(fileName);
 
-            slide.Shapes.AddPicture(file.FullName, MsoTriState.msoFalse, MsoTriState.msoTrue, shape.Left, shape.Top, shape.Width, shape.Height);
-            slide.Shapes[1].ZOrder(MsoZOrderCmd.msoBringToFront);
-            slide.Shapes[2].ZOrder(MsoZOrderCmd.msoSendBehindText);
+            presentation.Save("ImageFinderSlide.pptx");
 
-            pptPresentation.SaveAs(@"ImageFinderSlide.pptx", Microsoft.Office.Interop.PowerPoint.PpSaveAsFileType.ppSaveAsDefault, MsoTriState.msoTrue);
+            FileInfo ppt = new FileInfo("ImageFinderSlide.pptx");
+            ProcessStartInfo psi = new ProcessStartInfo();
+            psi.FileName = "POWERPNT.exe";
+            psi.Arguments = ppt.FullName;
+            Process.Start(psi);
+        }
+
+        private static string[] GetFileNames(BitmapImage[] imgs)
+        {
+            List<string> fileNames = new List<string>() { };
+
+            for(int i = 0; i < imgs.Length; i++)
+            {
+                fileNames.Add($"image{i + 1}{imgs[i].UriSource.AbsoluteUri.Substring(imgs[i].UriSource.AbsoluteUri.LastIndexOf('.'))}");
+            }
+
+            return fileNames.ToArray();
+        } 
+
+        private static FileInfo[] DownloadFiles(BitmapImage[] imgs, string[] fileNames)
+        {
+            List<FileInfo> files = new List<FileInfo>() { };
+
+            for(int i = 0; i < imgs.Length; i++)
+            {
+                byte[] data;
+                using (WebClient client = new WebClient())
+                {
+                    data = client.DownloadData(imgs[i].UriSource.AbsoluteUri);
+                }
+                File.WriteAllBytes(fileNames[i], data);
+                FileInfo file = new FileInfo(fileNames[i]);
+
+                files.Add(file);
+            }
+
+            return files.ToArray();
         }
     }
 }

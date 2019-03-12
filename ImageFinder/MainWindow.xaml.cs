@@ -24,6 +24,9 @@ namespace ImageFinder
         public MainWindow()
         {
             InitializeComponent();
+            Img1RemoveButton.Click += RemoveImage_Click;
+            Img2RemoveButton.Click += RemoveImage_Click;
+            Img3RemoveButton.Click += RemoveImage_Click;
         }
 
         private void BodyTxt_TextChanged(object sender, TextChangedEventArgs e)
@@ -139,7 +142,75 @@ namespace ImageFinder
                 return;
             }
 
-            HelperMethods.ExportSlide(TitleTxt.Text, BodyTxt.Text, (BitmapImage)DisplayImg.Source);
+            BitmapImage[] images = GetSelectedImages();
+
+            if(images.Length == 0)
+            {
+                MessageBox.Show("Must add atleast one image first!", "Error", MessageBoxButton.OK);
+                return;
+            }
+
+            HelperMethods.ExportSlide(TitleTxt.Text, BodyTxt.Text, images);
+        }
+
+        private void AddImgButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(SelectedImg1.Source is null)
+            {
+                AddImage(SelectedImg1);
+            }
+            else if(SelectedImg2.Source is null)
+            {
+                AddImage(SelectedImg2);
+            }
+            else if(SelectedImg3.Source is null)
+            {
+                AddImage(SelectedImg3);
+            }
+            else
+            {
+                MessageBox.Show("Must remove an existing image before adding a new one!", "Error", MessageBoxButton.OK);
+            }
+        }
+
+        private void AddImage(Image img)
+        {
+            var image = ImageCombobox.SelectedItem as WebImage;
+
+            BitmapImage bmp = new BitmapImage();
+            bmp.BeginInit();
+            bmp.UriSource = new Uri(image.WebFormatURL, UriKind.Absolute);
+            bmp.EndInit();
+
+            img.Source = bmp;
+        }
+
+        private void RemoveImage_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+
+            if (btn.Name == "Img1RemoveButton")
+                SelectedImg1.Source = null;
+            else if (btn.Name == "Img2RemoveButton")
+                SelectedImg2.Source = null;
+            else if (btn.Name == "Img3RemoveButton")
+                SelectedImg3.Source = null;
+        }
+
+        private BitmapImage[] GetSelectedImages()
+        {
+            List<BitmapImage> images = new List<BitmapImage>() { };
+
+            if (SelectedImg1.Source != null)
+                images.Add((BitmapImage)SelectedImg1.Source);
+
+            if (SelectedImg2.Source != null)
+                images.Add((BitmapImage)SelectedImg2.Source);
+
+            if (SelectedImg3.Source != null)
+                images.Add((BitmapImage)SelectedImg3.Source);
+
+            return images.ToArray();
         }
     }
 }
